@@ -6,6 +6,14 @@ import java.util.LinkedList;
 import java.util.ListIterator;
 import java.util.Scanner;
 
+/**
+ * The main class for the music app demonstration. This class showcases the
+ * creation of albums, addition of songs to these albums, and playlist
+ * management. It also provides a simple command-line interface to interact with
+ * playlists.
+ * 
+ * @author Rishab Ramalingam
+ */
 public class Main {
 
 	private static ArrayList<Album> albums = new ArrayList<>();
@@ -19,7 +27,7 @@ public class Main {
 		album.addSong("Emotionless", 5.02);
 		album.addSong("God's Plan", 3.18);
 		album.addSong("Im Upset", 3.34);
-		album.addSong("Mob Ties", 3.24); 
+		album.addSong("Mob Ties", 3.24);
 		albums.add(album);
 
 		album = new Album("Utopia", "Travis Scott");
@@ -31,7 +39,7 @@ public class Main {
 		album.addSong("SIRENS", 3.24);
 		album.addSong("MELTDOWN", 4.06);
 		albums.add(album);
-		
+
 		LinkedList<Song> playlist_1 = new LinkedList<>();
 		albums.get(1).addPlayList("MY EYES", playlist_1);
 		albums.get(0).addPlayList("Nonstop", playlist_1);
@@ -43,6 +51,13 @@ public class Main {
 		play(playlist_1);
 	}
 
+	/**
+	 * Plays the songs in the provided playlist. Provides a command-line interface
+	 * for the user to control the playback. Users can choose to play the next or
+	 * previous song, replay the current song, or delete a song from the playlist.
+	 *
+	 * @param playList The playlist of songs to be played.
+	 */
 	private static void play(LinkedList<Song> playList) {
 		Scanner sc = new Scanner(System.in);
 		boolean quit = false;
@@ -67,29 +82,28 @@ public class Main {
 				if (!forward) {
 					if (listIterator.hasNext()) {
 						listIterator.next();
-						
+
 						forward = true;
-						
+
 					}
 				}
-						if (listIterator.hasNext()) {
-							System.out.print("Now playing " + listIterator.next().toString());
-							break;
-							
-						} else {
-							System.out.print("No song available next :( ");
-							forward = false;
-						}
-						break;
-					
-				
+				if (listIterator.hasNext()) {
+					System.out.print("Now playing " + listIterator.next().toString());
+					break;
+
+				} else {
+					System.out.print("No song available next :( ");
+					forward = false;
+				}
+				break;
+
 			case 2:
 				if (forward) {
 					if (listIterator.hasPrevious()) {
 						listIterator.hasPrevious();
 						forward = false;
 					}
-					
+
 				}
 				if (listIterator.hasPrevious()) {
 					System.out.print("Now playing " + listIterator.previous().toString());
@@ -105,24 +119,21 @@ public class Main {
 					if (listIterator.hasPrevious()) {
 						System.out.print("Now playing " + listIterator.previous().toString());
 						forward = false;
-		
-					}
-					else {
+
+					} else {
 						System.out.println("This is the first song!");
-						
+
+					}
+					break;
+				} else {
+					if (listIterator.hasNext()) {
+						System.out.print("Now playing " + listIterator.next().toString());
+						forward = true;
+					} else {
+						System.out.print("No song available next :( ");
 					}
 					break;
 				}
-					else {
-						if (listIterator.hasNext()) {
-							System.out.print("Now playing " + listIterator.next().toString());
-							forward = true;
-						}
-						else {
-							System.out.print("No song available next :( ");
-						}
-						break;
-					}
 			case 4:
 				printList(playList);
 				break;
@@ -130,28 +141,39 @@ public class Main {
 				printMenu();
 				break;
 			case 6:
-				if (playList.size() == 0) {
+
+				if (playList.size() > 1) {
 					listIterator.remove();
+
 					if (listIterator.hasNext()) {
 						System.out.println("Now playing " + listIterator.next().toString());
 						forward = true;
-					}
-					else {
+
+					} else {
 						if (listIterator.hasPrevious()) {
 							System.out.println("Now playing \" + listIterator.previous().toString()");
+
+						} else {
+							if (listIterator.hasNext()) {
+
+								System.out.println("Now playing " + listIterator.next().toString());
+
+								forward = true;
+							}
 						}
-						
 					}
+				} else {
+					System.out.println("There are no more songs left in the playlist :(");
 				}
-
-				}
-
 			}
-
 		}
 
-	
+	}
 
+	/**
+	 * Displays the menu of options for the user. This method is called during the
+	 * playback to show available control options.
+	 */
 	private static void printMenu() {
 		System.out.println("Available options\n Press");
 		System.out.println("0 - to quit\n" + "1 - to play the next song\n" + "2 - to play the previous song\n"
@@ -159,6 +181,12 @@ public class Main {
 				+ "6 - to delete the current song");
 	}
 
+	/**
+	 * Prints the list of songs in the current playlist. This method helps the user
+	 * see all the songs available in the playlist.
+	 *
+	 * @param playList The playlist whose songs are to be displayed.
+	 */
 	private static void printList(LinkedList<Song> playList) {
 		Iterator<Song> iterator = playList.iterator();
 		System.out.println("-----------------");
