@@ -23,7 +23,7 @@ The application comprises three primary classes, each exemplifying best practice
 
 ### Installation
 1. Clone the repository:
-git clone https://github.com/rishabram/Projects.git
+git clone https://github.com/rishabram/Java.git
 
 2. Navigate to the Music App project directory:
 cd Projects/MusicApp
