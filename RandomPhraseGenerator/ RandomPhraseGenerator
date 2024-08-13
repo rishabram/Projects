@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * Generates random phrases from a grammar file.
+ * Generates random phrases from a grammar file and is the driver class for Grammar.
  * arg[0] is the grammar file, arg[1] is the number of phrases to generate.
  *
  * @version August 1st, 2024
- * @author Rishab Ramalingam
+ * @author Rishab Ramalingam and Josh Greenbaum
  */
 public class RandomPhraseGenerator {
     public static void main(String[] args) throws IOException {
