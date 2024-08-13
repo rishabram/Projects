@@ -74,7 +74,7 @@ Example:
 java comprehensive.RandomPhraseGenerator super_simple.g 5
 This command will generate five random phrases based on the super_simple.g grammar file.
 
-Efficiency Considerations
+### Efficiency Considerations:
 The project’s performance was optimized by carefully choosing data structures that support fast lookup, storage, and retrieval operations:
 
 HashMap for Fast Lookups: Using a HashMap for storing non-terminals ensures quick retrieval of expansions, minimizing the time required to generate phrases.
