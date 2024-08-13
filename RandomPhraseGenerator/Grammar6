@@ -1,0 +1,103 @@
+package comprehensive;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
+/**
+ * Represents a no-context grammar that can generate random phrases.
+ * Sixth times the charm.
+ *
+ * @version August 1st, 2024
+ * @author Rishab Ramalingam and Josh Greenbaum
+ */
+public class Grammar6 {
+    private final Map<String, String[]> nonterminals;
+    private final Random rng;
+
+    /**
+     * Constructs a Grammar object from a file.
+     *
+     * @param file the file to read the grammar from
+     * @throws IOException if an I/O error occurs
+     */
+    public Grammar6(File file) throws IOException {
+        nonterminals = new HashMap<>();
+        rng = new Random();
+        Build(file);
+    }
+
+    /**
+     * Prints a specified number of random phrases.
+     *
+     * @param num the number of phrases to print
+     */
+    public void print(int num) {
+        for (int i = 0; i < num; i++) {
+            System.out.println(generatePhrase("<start>"));
+        }
+    }
+
+    /**
+     * Builds the grammar from a file.
+     * O(N) where N is the number of lines in the file.
+     *
+     * @param file the file to read the grammar from
+     * @throws IOException if an I/O error occurs
+     */
+    private void Build(File file) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            String line;
+            String currentNonTerminal = null;
+            ArrayList<String> phrases = new ArrayList<>();
+            boolean open = false;
+            while ((line = reader.readLine()) != null) {
+                if (line.trim().isEmpty() || line.startsWith("//")) {
+                    continue;
+                }
+                if (line.equals("{")) {
+                    phrases.clear();
+                    open = true;
+                } else if (line.equals("}")) {
+                    if (currentNonTerminal != null) {
+                        nonterminals.put(currentNonTerminal, phrases.toArray(new String[0]));
+                    }
+                    currentNonTerminal = null;
+                    open = false;
+                } else if (line.startsWith("<") && line.endsWith(">") && currentNonTerminal == null && open) {
+                    currentNonTerminal = line;
+                } else if (open){
+                    phrases.add(line);
+                }
+            }
+        }
+    }
+
+    /**
+     * Generates a random phrase from the grammar.
+     *
+     * @param nonterminal the nonterminal to generate a phrase for
+     * @return the generated phrase
+     */
+    private String generatePhrase(String nonterminal) {
+        String[] phrases = nonterminals.get(nonterminal);
+        String curr = phrases[rng.nextInt(phrases.length)];
+        StringBuilder result = new StringBuilder();
+        int i = 0;
+        while (i < curr.length()) {
+            char ch = curr.charAt(i);
+            if (ch == '<') {
+                int end = curr.indexOf('>', i);
+                String newNonTerminal = curr.substring(i, end + 1);
+                result.append(generatePhrase(newNonTerminal));
+                i = end + 1;
+            } else {
+                result.append(ch);
+                i++;
+            }
+        }
+        return result.toString();
+    }
+}
