@@ -1,42 +1,55 @@
 # Fake News Detector
 
-## Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Model Training & Inference](#model-training--inference)
-- [Flask Backend Setup](#flask-backend-setup)
-- [Chrome Extension Setup](#chrome-extension-setup)
-- [Deployment](#deployment)
-- [Future Improvements](#future-improvements)
-- [References](#references)
-- [Author](#author)
+**Table of Contents**
+
+1. [Overview](#overview)  
+2. [Features](#features)  
+3. [Tech Stack](#tech-stack)  
+4. [Project Structure](#project-structure)  
+5. [Model Training & Inference](#model-training--inference)  
+6. [Flask Backend Setup](#flask-backend-setup)  
+7. [Chrome Extension Setup](#chrome-extension-setup)  
+8. [Deployment](#deployment)  
+9. [Future Improvements](#future-improvements)  
+10. [References](#references)
+
+---
 
 ## Overview
-Fake News Detector is a project that identifies potentially fake or real news content using a Machine Learning (ML) model. It comes with a Chrome extension that lets users highlight any text on a webpage and quickly get a classification result (FAKE vs. REAL), along with a confidence score.
 
-## This project showcases:
-- Natural Language Processing (NLP) techniques (TF-IDF)
-- Machine Learning model building with scikit-learn
-- Flask for serving a prediction API
-- Chrome Extension development
-- Deployment considerations (e.g., Heroku)
+**Fake News Detector** is a project that identifies potentially **fake** or **real** news content using a **Machine Learning (ML)** model. It comes with a **Chrome Extension** that lets users highlight any text on a webpage and quickly get a classification result (**FAKE** vs. **REAL**), along with a confidence/distance score.
+
+This project demonstrates:
+1. **Natural Language Processing (NLP)** with TF-IDF.
+2. **Machine Learning** model building (scikit-learn).
+3. **Flask** for serving a RESTful prediction API.
+4. **Chrome Extension** development (Manifest V3).
+5. **Deployment** considerations (e.g., Heroku).
+
+---
 
 ## Features
-- Train an ML model on a labeled dataset of fake and real news.
-- Classify user-highlighted text in real-time using a Chrome Extension.
-- Confidence Score or distance measure from the decision boundary (depending on the classifier).
-- User-Friendly interface in Chrome to quickly run fake news checks on any webpage.
+
+- **Train** an ML model on a labeled dataset of fake and real news.
+- **Classify** user-highlighted text on any webpage in real-time using a Chrome Extension.
+- **Confidence or Distance Score** (depending on classifier capabilities).
+- **User-Friendly** interface via the extension’s popup.
+
+---
 
 ## Tech Stack
-- **Python 3.9+**: Core programming language.
-- **Flask**: Lightweight backend for serving the prediction API.
-- **scikit-learn, pandas, numpy**: Libraries for data manipulation, NLP, and ML model building.
-- **Chrome Extension (Manifest V3)**: Browser extension framework for user interaction.
-- **Heroku**: Optional deployment platform.
+
+- **Python 3.7+**  
+- **Flask** (for the backend)  
+- **scikit-learn**, **pandas**, **numpy** (for ML)  
+- **Chrome Extension** (Manifest V3)  
+- **Heroku** (optional deployment)
+
+---
 
 ## Project Structure
+
+
 ```plaintext
 FakeNewsDetector/
 ├── fake_news_app/
@@ -50,37 +63,53 @@ FakeNewsDetector/
     ├── popup.js         # Chrome extension logic
     ├── background.js    # (Optional) service worker or additional extension logic
 ```
-## In fake_news_app/
-model.py: Contains model-building logic with TfidfVectorizer and PassiveAggressiveClassifier.
-main.py: A Flask app that loads/uses the model for prediction via a /predict endpoint.
-news.csv: Example dataset (fake vs. real news).
-requirements.txt: Lists all Python libraries needed (Flask, scikit-learn, pandas, gunicorn, etc.).
-## In chrome_extension/
-manifest.json: Chrome Extension configuration (permissions, action).
-popup.html: HTML file that appears when you click the extension icon.
-popup.js: Script that handles user interactions (e.g., collecting selected text, calling the Flask API).
-background.js (optional): For service worker or background tasks in Manifest V3.
-Model Training & Inference
-Training
 
-We use model.py to train the model on the provided dataset (news.csv).
-Core steps:
-Read data into a Pandas DataFrame.
-Split into training/test sets.
-Vectorize text using TfidfVectorizer.
-Train a PassiveAggressiveClassifier (or alternative).
-Evaluate accuracy and confusion matrix.
-Inference
+### In `fake_news_app/`
+- **`model.py`**  
+  Contains the logic to train and evaluate the model using `TfidfVectorizer` and `PassiveAggressiveClassifier`.  
+- **`main.py`**  
+  A Flask app that loads or trains the model on startup, then exposes a `/predict` endpoint for inference.  
+- **`news.csv`**  
+  A sample dataset for fake/real news classification.  
+- **`requirements.txt`**  
+  Lists Python dependencies (Flask, scikit-learn, gunicorn, pandas, etc.).
 
-The Flask endpoint in main.py loads the trained vectorizer and classifier at startup.
-When the /predict endpoint receives text, it vectorizes the text, runs a prediction, and returns a JSON response (FAKE or REAL, plus an optional confidence/distance measure).
-Flask Backend Setup
-Install Requirements
+### In `chrome_extension/`
+- **`manifest.json`**  
+  Chrome Extension configuration (permissions, name, version, etc.).  
+- **`popup.html`**  
+  The HTML UI displayed when clicking the extension’s icon.  
+- **`popup.js`**  
+  Handles user interactions (e.g. capturing highlighted text, calling Flask API).  
+- **`background.js`**  
+  An optional service worker file for background tasks.
 
-bash
-Copy code
-cd fake_news_app
-pip install -r requirements.txt
+---
+
+## Model Training & Inference
+
+1. **Training**  
+   - We typically use `model.py` to train the model on `news.csv`.  
+   - Core steps:
+     1. **Load** the dataset into a Pandas DataFrame.  
+     2. **Split** into training and test sets (e.g., 80/20).  
+     3. **Vectorize** the text with `TfidfVectorizer`.  
+     4. **Train** a `PassiveAggressiveClassifier` (or alternative).  
+     5. **Evaluate** accuracy and confusion matrix.  
+
+2. **Inference**  
+   - The Flask app (`main.py`) loads the trained vectorizer and model at startup.  
+   - `/predict` endpoint receives JSON input (`text`), vectorizes it, and returns a JSON response (FAKE or REAL + confidence/distance measure).
+
+---
+
+## Flask Backend Setup
+
+1. **Install Requirements**
+   ```bash
+   cd fake_news_app
+   pip install -r requirements.txt
+
 Train the Model (Optional if main.py automatically trains on startup, but you can also pre-train and save the model)
 
 bash
