@@ -49,7 +49,7 @@ FakeNewsDetector/
     ├── popup.html       # Popup interface
     ├── popup.js         # Chrome extension logic
     ├── background.js    # (Optional) service worker or additional extension logic
-
+```
 ## In fake_news_app/
 model.py: Contains model-building logic with TfidfVectorizer and PassiveAggressiveClassifier.
 main.py: A Flask app that loads/uses the model for prediction via a /predict endpoint.
