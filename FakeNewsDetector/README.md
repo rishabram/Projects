@@ -1,39 +1,43 @@
 # Fake News Detector
-## Table of Contents
 
-Overview
-Features
-Tech Stack
-Project Structure
-Model Training & Inference
-Flask Backend Setup
-Chrome Extension Setup
-Deployment
-Future Improvements
-References
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Project Structure](#project-structure)
+- [Model Training & Inference](#model-training--inference)
+- [Flask Backend Setup](#flask-backend-setup)
+- [Chrome Extension Setup](#chrome-extension-setup)
+- [Deployment](#deployment)
+- [Future Improvements](#future-improvements)
+- [References](#references)
+- [Author](#author)
+
 ## Overview
 Fake News Detector is a project that identifies potentially fake or real news content using a Machine Learning (ML) model. It comes with a Chrome extension that lets users highlight any text on a webpage and quickly get a classification result (FAKE vs. REAL), along with a confidence score.
 
 ## This project showcases:
+- Natural Language Processing (NLP) techniques (TF-IDF)
+- Machine Learning model building with scikit-learn
+- Flask for serving a prediction API
+- Chrome Extension development
+- Deployment considerations (e.g., Heroku)
 
-Natural Language Processing (NLP) techniques (TF-IDF)
-Machine Learning model building with scikit-learn
-Flask for serving a prediction API
-Chrome Extension development
-Deployment considerations (e.g., Heroku)
-Features
-Train an ML model on a labeled dataset of fake and real news.
-Classify user-highlighted text in real-time using a Chrome Extension.
-Confidence Score or distance measure from the decision boundary (depending on classifier).
-User-Friendly interface in Chrome to quickly run fake news checks on any webpage.
-Tech Stack
-Python 3.9+ (can work with 3.7+)
-Flask for the API
-scikit-learn, pandas, numpy for ML
-Chrome Extension (Manifest V3)
-Heroku (optional) for deployment
+## Features
+- Train an ML model on a labeled dataset of fake and real news.
+- Classify user-highlighted text in real-time using a Chrome Extension.
+- Confidence Score or distance measure from the decision boundary (depending on the classifier).
+- User-Friendly interface in Chrome to quickly run fake news checks on any webpage.
+
+## Tech Stack
+- **Python 3.9+**: Core programming language.
+- **Flask**: Lightweight backend for serving the prediction API.
+- **scikit-learn, pandas, numpy**: Libraries for data manipulation, NLP, and ML model building.
+- **Chrome Extension (Manifest V3)**: Browser extension framework for user interaction.
+- **Heroku**: Optional deployment platform.
+
 ## Project Structure
-
+```plaintext
 FakeNewsDetector/
 ├── fake_news_app/
 │   ├── main.py         # Flask app entry point
@@ -45,6 +49,7 @@ FakeNewsDetector/
     ├── popup.html       # Popup interface
     ├── popup.js         # Chrome extension logic
     ├── background.js    # (Optional) service worker or additional extension logic
+
 ## In fake_news_app/
 model.py: Contains model-building logic with TfidfVectorizer and PassiveAggressiveClassifier.
 main.py: A Flask app that loads/uses the model for prediction via a /predict endpoint.
