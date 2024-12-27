@@ -1,4 +1,4 @@
-Fake News Detector
+### Fake News Detector
 Table of Contents
 
 Overview
