@@ -110,14 +110,14 @@ FakeNewsDetector/
    cd fake_news_app
    pip install -r requirements.txt
 
-Train the Model (Optional if main.py automatically trains on startup, but you can also pre-train and save the model)
+2. **Train the Model (Optional if main.py automatically trains on startup, but you can also pre-train and save the model)**
 
 bash
 Copy code
 python model.py
 Adjust your scripts accordingly if you’re saving/loading a model pickle.
 
-Run the Flask App
+3. **Run the Flask App**
 
 bash
 Copy code
