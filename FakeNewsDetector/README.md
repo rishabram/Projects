@@ -112,16 +112,16 @@ FakeNewsDetector/
 
 2. **Train the Model (Optional if main.py automatically trains on startup, but you can also pre-train and save the model)**
 
-bash
-Copy code
+```bash
 python model.py
+```
 Adjust your scripts accordingly if you’re saving/loading a model pickle.
 
 3. **Run the Flask App**
 
-bash
-Copy code
+```bash
 python main.py
+```
 By default, the server starts at: http://127.0.0.1:5000.
 Test the Endpoint
 
